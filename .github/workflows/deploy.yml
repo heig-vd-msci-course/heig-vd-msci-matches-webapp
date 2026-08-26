@@ -1,0 +1,53 @@
+# CI/CD Pipeline - Deploy to GitHub Pages on version tag
+# Triggers when a version tag (v*) is pushed
+# Example: git tag v1.0.0 && git push origin v1.0.0
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    tags:
+      - 'v*'  # Triggers on tags like v1.0.0, v2.1.3, etc.
+
+# Sets permissions for the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one deployment at a time
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy Game to GitHub Pages
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload static files as artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload the entire repository root (contains index.html, style.css, script.js, config.js)
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Display deployment URL
+        run: |
+          echo "Game deployed successfully!"
+          echo "URL: ${{ steps.deployment.outputs.page_url }}"
+          echo "Version: ${{ github.ref_name }}"
