@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu des Allumettes</title>
+
+    <!-- Configuration (doit être chargé en premier) -->
+    <script src="config.js"></script>
+
+    <!-- Chargement conditionnel du CSS -->
+    <script>
+        if (CONFIG.USE_CSS) {
+            document.write('<link rel="stylesheet" href="style.css">');
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Jeu des Allumettes</h1>
+
+        <!-- ========== PAGE 1: CONFIGURATION ========== -->
+        <div id="page-setup" class="page">
+            <h2>Configuration de la partie</h2>
+
+            <div class="form-group">
+                <label>Mode de jeu :</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="gameMode" value="human" checked>
+                        Humain vs Humain
+                    </label>
+                    <label>
+                        <input type="radio" name="gameMode" value="bot">
+                        Humain vs Robot
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="player1Name">Nom du Joueur 1 :</label>
+                <input type="text" id="player1Name" placeholder="Joueur 1">
+            </div>
+
+            <div class="form-group" id="player2NameGroup">
+                <label for="player2Name">Nom du Joueur 2 :</label>
+                <input type="text" id="player2Name" placeholder="Joueur 2">
+            </div>
+
+            <div class="form-group">
+                <label for="matchCount">Nombre d'allumettes :</label>
+                <input type="number" id="matchCount" value="21" min="5" max="50">
+            </div>
+
+            <button onclick="startGame()">Commencer la partie</button>
+        </div>
+
+        <!-- ========== PAGE 2: TOUR DE JEU ========== -->
+        <div id="page-game" class="page hidden">
+            <h2 id="turnTitle">Tour de ...</h2>
+
+            <div id="matches"></div>
+
+            <p id="counter">Allumettes restantes : 21</p>
+
+            <div class="buttons" id="gameButtons">
+                <button onclick="remove(1)">Retirer 1</button>
+                <button onclick="remove(2)">Retirer 2</button>
+                <button onclick="remove(3)">Retirer 3</button>
+            </div>
+        </div>
+
+        <!-- ========== PAGE 3: FIN DE PARTIE ========== -->
+        <div id="page-end" class="page hidden">
+            <h2 id="winnerMessage">Fin de la partie !</h2>
+
+            <div class="history-section">
+                <h3>Historique des coups</h3>
+                <div id="moveHistory"></div>
+            </div>
+
+            <div class="end-buttons">
+                <button onclick="replayWithSamePlayers()">Rejouer (mêmes joueurs)</button>
+                <button onclick="replayWithNewPlayers()">Nouvelle partie</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
