@@ -88,6 +88,19 @@ function displayMatches() {
 function updateGameDisplay() {
     displayMatches();
     updateCounter();
+    updateButtonStates();
+}
+
+// Mettre à jour l'état des boutons en fonction des allumettes restantes
+function updateButtonStates() {
+    let btn1 = document.getElementById("btn-remove-1");
+    let btn2 = document.getElementById("btn-remove-2");
+    let btn3 = document.getElementById("btn-remove-3");
+
+    // Désactiver les boutons si pas assez d'allumettes
+    btn1.disabled = matches < 1;
+    btn2.disabled = matches < 2;
+    btn3.disabled = matches < 3;
 }
 
 // Mettre à jour le compteur et le tour
@@ -145,6 +158,7 @@ function remove(number) {
         // Mettre à jour le compteur
         matches = matches - number;
         updateCounter();
+        updateButtonStates();
 
         // Vérifier si la partie est finie
         if (matches <= 0) {
@@ -227,5 +241,10 @@ function replayWithSamePlayers() {
 
 // Nouvelle partie avec nouveaux Personnes
 function replayWithNewPlayers() {
+    showPage("page-setup");
+}
+
+// Quitter la partie en cours
+function exitGame() {
     showPage("page-setup");
 }

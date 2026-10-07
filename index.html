@@ -64,9 +64,13 @@
             <p id="counter">Allumettes restantes : 21</p>
 
             <div class="buttons" id="gameButtons">
-                <button onclick="remove(1)">Retirer 1</button>
-                <button onclick="remove(2)">Retirer 2</button>
-                <button onclick="remove(3)">Retirer 3</button>
+                <button id="btn-remove-1" onclick="remove(1)">Retirer 1</button>
+                <button id="btn-remove-2" onclick="remove(2)">Retirer 2</button>
+                <button id="btn-remove-3" onclick="remove(3)">Retirer 3</button>
+            </div>
+
+            <div class="exit-button">
+                <button onclick="exitGame()">Quitter la partie</button>
             </div>
         </div>
 
